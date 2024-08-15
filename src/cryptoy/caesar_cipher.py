@@ -17,7 +17,6 @@ def encrypt(msg: str, shift: int) -> str:
     for i in range(len(msg)):
         msg[i] = (msg[i] + shift) % 0x110000
 
-
     return unicodes_to_str(msg)
 
 
@@ -35,16 +34,11 @@ def attack() -> tuple[str, int]:
 
     # Code a placer ici, il faut return un couple (msg, shift)
     # ou msg est le message déchiffré, et shift la clef de chiffrage correspondant
-    
-    for i in range(0x110000):
-        try:
-            msg = decrypt(s,i)
-            if "ennemis" in msg:
-                return (msg,i)
-        except:
-            pass
+
+    for i in range(0x10000):
+        msg = decrypt(s, i)
+        if "ennemis" in msg:
+            return (msg, i)
 
     # Si on ne trouve pas on lance une exception:
     raise RuntimeError("Failed to attack")
-
-
